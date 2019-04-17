@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="lib/jquery.js" type="text/javascript"></script>
+        <script src="lib/js/bootstrap.js" type="text/javascript"></script>
+        <link href="lib/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <script src="src/Vehicule.js" type="text/javascript"></script>
+        <title></title>
+    </head>
+    <body>
+        <style>
+            #globalCanvas{
+                border:1px solid #000000;   
+                background-color: grey;
+            }
+
+            #secondCanvas{
+                position: absolute;
+                z-index: 2;
+            }
+        </style>        
+        <canvas id="globalCanvas">
+
+        </canvas>
+        <canvas id="secondCanvas">
+
+        </canvas>
+        <button>
+
+        </button>
+
+        <script type="text/javascript">
+            var allPoints = ["A", "B", "C", "D", "E"];
+            var whereToPop = ["A", "B", "C", "D", "E"];
+            
+            var AllCars = [];
+            var canvas = document.getElementById("globalCanvas"),
+                    ctx = canvas.getContext("2d");
+            var Est = new Noeud(1, canvas.width, getPS(0.5, canvas.height));
+            var Sud = new Noeud(1, getPS(0.5, canvas.width), canvas.height);
+            var Ouest = new Noeud(1, 0, getPS(0.5, canvas.height));
+            var Nord = new Noeud(1, getPS(0.5, canvas.width), 0);
+            var whereToOut = [Est, Sud];
+            
+            var background = new Image();
+            background.src = "xd2.jpg";
+
+            background.onload = function () {
+                ctx.drawImage(background, 0, 0);
+            }
+
+            //Set canvas Size
+            canvas.width = getPS(0.8, screen.width);
+            canvas.height = getPS(0.8, screen.height);
+
+            var tmpH = canvas.height;
+            var tmpW = canvas.width;
+            var H = tmpH;
+            console.log('largeur max: ' + tmpW);
+            console.log('hauteur max: ' + tmpH);
+
+            w = getPS(0.01, tmpW);
+            var roadX = getPS(0.48, tmpW);
+            var roadY = getPS(0, tmpH);
+            //console.log('50% de la largeur:' + roadX);
+            console.log("x:" + roadX + " y:" + roadY);
+
+            const vehicule1 = new Vehicule(roadX, roadY + 10, w);
+            const vehicule2 = new Vehicule(roadX, roadY + 50, w);
+            console.log(canvas.width);
+            function initRoads() {
+                //Rue horizontale.
+                //ctx.fillStyle = "white";
+                //ctx.fillRect(roadX, roadY, w, H); //void ctx.fillRect(x, y, largeur, hauteur);
+
+                //Rue verticale. 
+                //ctx.fillStyle = "white";
+                //ctx.fillRect(roadY, getPS(0.49, tmpH), canvas.width, w);
+
+
+                vehicule1.Pop();
+
+            }
+            ;
+            // Width :1228 height :691
+
+            //x du feu = 50% + 1% + lageur du cercle.
+            //y du feu = 50% + 1% + largeur du cercle.
+            ctx.fillStyle = "red";
+            ctx.arc(getPS(0.5, tmpW), getPS(0.54, tmpH), getPS(0.01, tmpW), 0, 2 * Math.PI);
+            ctx.fill();
+
+            ctx.fillStyle = "red";
+            ctx.arc(getPS(0.5, tmpW), getPS(0.54, tmpH), getPS(0.01, tmpW), 0, 2 * Math.PI);
+            ctx.fill();
+
+
+            //while(objectif){
+
+
+            //vehicule2.Avancer();
+
+            //setInterval(vehicule1.Avancer(), 10);
+            //window.requestAnimationFrame(vehicule.Avancer);
+
+            initRoads();
+
+            function goForIt() {
+                var objectif = false;
+
+                setInterval(function () {
+                    var vehicule = new Vehicule(roadX, roadY + 1, w);
+                    var objectif = whereToOut[getRandObjectif()];
+                    vehicule.setObjectif(objectif.getPosisitonX(), objectif.getPosisitonY());
+                    AllCars.push(vehicule);
+                }, randomizeMe(2000, 5000));
+
+                setInterval(function () {
+                    for (car in AllCars) {
+                        AllCars[car].Avancer();
+                    }
+                    //vehicule1.Avancer();
+                    //vehicule2.Avancer();
+                    //vehicule1.afficherInfos("vehicule1");
+                    //vehicule2.afficherInfos("vehicule2");
+                    //initRoads();
+
+                    //vehicule1.Pop();
+                    //vehicule2.Pop();
+                }, 300);
+                //while (objectif === false) {
+                //setTimeout(function () {
+
+                //}, 1000);
+                //}
+            }
+            function randomizeMe(min, max) {
+                var random = Math.floor(Math.random() * (+max - +min)) + +min;
+                return random;
+            }
+            //goForIt();
+
+
+            function getPS(pourcent, totalSize) {
+                var nbPx;
+                nbPx = Math.trunc(totalSize * pourcent);
+                return +nbPx;
+            }
+
+            function getRandObjectif() {
+                return randomizeMe(0, whereToOut.length);
+            }
+        </script>
+    </body>
+</html>
