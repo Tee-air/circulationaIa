@@ -5,6 +5,7 @@
         <script src="lib/js/bootstrap.js" type="text/javascript"></script>
         <link href="lib/css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <script src="src/Vehicule.js" type="text/javascript"></script>
+        <script src="src/Feu.js" type="text/javascript"></script>
         <script src="src/Segment.js" type="text/javascript"></script>
         <script src="src/Noeud.js" type="text/javascript"></script>
         <title></title>
@@ -19,6 +20,10 @@
             #secondCanvas{
                 position: absolute;
                 z-index: 2;
+            }
+            
+            #feuCanvas{
+                
             }
         </style>        
         <canvas id="globalCanvas">
@@ -46,11 +51,12 @@
             var Nord = new Noeud(1, getPS(0.5, canvas.width), 0);
             var Centre = new Noeud(4, getPS(0.5, canvas.width), getPS(0.5, canvas.height));
             var whereToOut = [Est, Sud];
-
             //Créer les Segments !!
             var horizontal1 = new Segment(Nord, Centre);
             var horizontal2 = new Segment(Centre, Sud);
-
+            var Feu1 = new Feu("green", 10);
+            var Feu2 = new Feu("red", 10);
+           
             var background = new Image();
             background.src = "xd2.jpg";
 
@@ -103,6 +109,8 @@
             ctx.arc(getPS(0.5, tmpW), getPS(0.54, tmpH), getPS(0.01, tmpW), 0, 2 * Math.PI);
             ctx.fill();
 
+
+            
 
             //while(objectif){
 
@@ -161,6 +169,12 @@
             function getRandObjectif() {
                 return randomizeMe(0, whereToOut.length);
             }
+            
+            function switchFeu(onclickFeu){
+                this.state = state;
+                this.interval = interval;
+            }
+            
         </script>
     </body>
 </html>
