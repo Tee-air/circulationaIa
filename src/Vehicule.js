@@ -5,7 +5,7 @@ class Vehicule {
         this.positionX = x;
         this.positionY = y;
         this.largeur = largeur;
-        this.vitesse = 4;
+        this.vitesse = 1;
         this.distanceSecu = 30;
         this.id = id;
     }
@@ -14,19 +14,36 @@ class Vehicule {
         //Si le véhicule se rapproche du noeud central
         //Donc sur l'axe Y: Si sont Y est égal à celui du noeud
 
-        //console.log(this.positionY + "----------->" + noeudPositionY);
-        //console.log(noeudPositionY + "----------->" + this.objectif.Y);
-        //if (this.positionY === noeudPositionY && this.positionX === noeudPositionX) {
-        console.log(2, "id: " + this.id);
+        //Cas 1:
+        //La voiture arrive à l'intersection par le haut(Nord), son objectif est d'aller à l'Est
 
-        //Avancer(true);
-        if (noeudPositionY === this.positionY && noeudPositionY === this.objectif.Y) {
-            //console.log(3, "id: "+ this.id);
-            this.Avancer(true);
-        } else {
-            //console.log(4, "id: "+ this.id);
+        //Cas 2:
+        //La voiture arrive à l'intersection par la gauche(Ouest), son objectif est d'aller à l'Est
+
+        //Cas 3: 
+        //La voiture arrive à l'intersection par le haut (Nord), son objectif est d'aller au Sud
+
+        //Cas 4:
+        //La voiture arrive à l'intersection par la gauche (Ouest), son objectif est d'aller au Sud
+
+
+        if (noeudPositionX === this.positionX && this.positionY < noeudPositionY) {
+            //Vien du NORD
             this.Avancer(false);
+        } else if (noeudPositionY === this.positionY && this.positionX < noeudPositionX) {
+            this.Avancer(true);
+        } else if (this.objectif.X === this.positionX || this.positionY === this.objectif.Y) {
+            if (this.objectif.X > this.positionX) {
+                // aller Horizontalement
+                this.Avancer(true);
+            } else if (this.objectif.Y > this.positionY) {
+                // aller verticalement
+                this.Avancer(false);
+            }
         }
+
+
+
         //} else {
         //console.log(5, "id: "+ this.id);
         //this.Avancer(false);
@@ -46,6 +63,7 @@ class Vehicule {
             this.context.fillRect(this.positionX, this.positionY, 15, this.largeur);
         } else {
             this.context.clearRect(this.positionX, this.positionY, this.largeur, 15);
+            this.context.clearRect(this.positionX, this.positionY, 15, this.largeur);
             this.positionY += this.vitesse;
             this.context.fillRect(this.positionX, this.positionY, this.largeur, 15);
         }
