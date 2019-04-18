@@ -11,37 +11,45 @@ class Vehicule {
     }
 
     Actions(noeudPositionX, noeudPositionY) {
-        
-        if (this.positionX === noeudPositionX - this.distanceSecu) {
-            console.log(1, "id: "+ this.id);
-        } else if (this.positionY === noeudPositionY - this.distanceSecu) {
-            console.log(2, "id: "+ this.id);
-            //Avancer(true);
-            if (noeudPositionY === this.objectif.objectifY){
-                console.log(3, "id: "+ this.id);
-               this.Avancer(true);
-            }else{
-                console.log(4, "id: "+ this.id);
-               this.Avancer(false); 
-            }
-        }else{
-            console.log(5, "id: "+ this.id);
+        //Si le véhicule se rapproche du noeud central
+        //Donc sur l'axe Y: Si sont Y est égal à celui du noeud
+
+        //console.log(this.positionY + "----------->" + noeudPositionY);
+        //console.log(noeudPositionY + "----------->" + this.objectif.Y);
+        //if (this.positionY === noeudPositionY && this.positionX === noeudPositionX) {
+        console.log(2, "id: " + this.id);
+
+        //Avancer(true);
+        if (noeudPositionY === this.positionY && noeudPositionY === this.objectif.Y) {
+            //console.log(3, "id: "+ this.id);
+            this.Avancer(true);
+        } else {
+            //console.log(4, "id: "+ this.id);
             this.Avancer(false);
         }
+        //} else {
+        //console.log(5, "id: "+ this.id);
+        //this.Avancer(false);
+        //}
 
     }
 
     Avancer(horiz) {
-        this.context.clearRect(this.positionX, this.positionY, this.largeur, 15);
+        //this.context.clearRect(this.positionX, this.positionY, this.largeur, 15);
         //this.context.clearRect(0,0,this.canvas.width, this.canvas.height);
         //this.context.beginPath();
         //TODO: 
-        if(horiz === true){
+        if (horiz === true) {
+            this.context.clearRect(this.positionX, this.positionY, this.largeur, 15);
+            this.context.clearRect(this.positionX, this.positionY, 15, this.largeur);
             this.positionX += this.vitesse;
-        }else{
+            this.context.fillRect(this.positionX, this.positionY, 15, this.largeur);
+        } else {
+            this.context.clearRect(this.positionX, this.positionY, this.largeur, 15);
             this.positionY += this.vitesse;
+            this.context.fillRect(this.positionX, this.positionY, this.largeur, 15);
         }
-        this.context.fillRect(this.positionX, this.positionY, this.largeur, 15);
+
         //this.context.closePath();
         //x+=4;
 
@@ -70,8 +78,9 @@ class Vehicule {
     }
 
     setObjectif(objectifX, objectifY) {
-        this.objectif = {objectifY: objectifY,
-            objectifX: objectifX};
+        this.objectif = {Y: objectifY,
+            X: objectifX};
+        console.log(this.objectif);
     }
 
 }

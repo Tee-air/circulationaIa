@@ -44,6 +44,11 @@
             var canvas = document.getElementById("globalCanvas"),
                     ctx = canvas.getContext("2d");
 
+
+            //Set canvas Size
+            canvas.width = getPS(0.8, screen.width);
+            canvas.height = getPS(0.8, screen.height);
+
             //Créer les noeuds !!
             var Est = new Noeud(1, canvas.width, getPS(0.5, canvas.height));
             var Sud = new Noeud(1, getPS(0.5, canvas.width), canvas.height);
@@ -51,6 +56,8 @@
             var Nord = new Noeud(1, getPS(0.5, canvas.width), 0);
             var Centre = new Noeud(4, getPS(0.5, canvas.width), getPS(0.5, canvas.height));
             var whereToOut = [Est, Sud];
+
+
             //Créer les Segments !!
             var horizontal1 = new Segment(Nord, Centre);
             var horizontal2 = new Segment(Centre, Sud);
@@ -64,9 +71,7 @@
                 ctx.drawImage(background, 0, 0);
             }
 
-            //Set canvas Size
-            canvas.width = getPS(0.8, screen.width);
-            canvas.height = getPS(0.8, screen.height);
+
 
             var tmpH = canvas.height;
             var tmpW = canvas.width;
@@ -82,7 +87,6 @@
 
             const vehicule1 = new Vehicule(roadX, roadY + 10, w);
             const vehicule2 = new Vehicule(roadX, roadY + 50, w);
-            console.log(canvas.width);
             function initRoads() {
                 //Rue horizontale.
                 //ctx.fillStyle = "white";
@@ -128,8 +132,9 @@
                 setInterval(function () {
                     var vehicule = new Vehicule(roadX, roadY + 1, w, AllCars.length);
                     var objectif = whereToOut[getRandObjectif()];
-                    //.log(objectif);
-                    vehicule.setObjectif(objectif.posisitonX, objectif.posisitonY);
+                    //console.log(whereToOut[getRandObjectif()]);
+                    console.log(" X: " + objectif.positionX + " Y: " + objectif.positionY);
+                    vehicule.setObjectif(objectif.positionX, objectif.positionY);
                     AllCars.push(vehicule);
                 }, randomizeMe(2000, 5000));
 
