@@ -5,6 +5,8 @@
         <script src="lib/js/bootstrap.js" type="text/javascript"></script>
         <link href="lib/css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <script src="src/Vehicule.js" type="text/javascript"></script>
+        <script src="src/Segment.js" type="text/javascript"></script>
+        <script src="src/Noeud.js" type="text/javascript"></script>
         <title></title>
     </head>
     <body>
@@ -32,16 +34,23 @@
         <script type="text/javascript">
             var allPoints = ["A", "B", "C", "D", "E"];
             var whereToPop = ["A", "B", "C", "D", "E"];
-            
+
             var AllCars = [];
             var canvas = document.getElementById("globalCanvas"),
                     ctx = canvas.getContext("2d");
+
+            //Créer les noeuds !!
             var Est = new Noeud(1, canvas.width, getPS(0.5, canvas.height));
             var Sud = new Noeud(1, getPS(0.5, canvas.width), canvas.height);
             var Ouest = new Noeud(1, 0, getPS(0.5, canvas.height));
             var Nord = new Noeud(1, getPS(0.5, canvas.width), 0);
+            var Centre = new Noeud(4, getPS(0.5, canvas.width), getPS(0.5, canvas.height));
             var whereToOut = [Est, Sud];
-            
+
+            //Créer les Segments !!
+            var horizontal1 = new Segment(Nord, Centre);
+            var horizontal2 = new Segment(Centre, Sud);
+
             var background = new Image();
             background.src = "xd2.jpg";
 
@@ -109,15 +118,17 @@
                 var objectif = false;
 
                 setInterval(function () {
-                    var vehicule = new Vehicule(roadX, roadY + 1, w);
+                    var vehicule = new Vehicule(roadX, roadY + 1, w, AllCars.length);
                     var objectif = whereToOut[getRandObjectif()];
-                    vehicule.setObjectif(objectif.getPosisitonX(), objectif.getPosisitonY());
+                    //.log(objectif);
+                    vehicule.setObjectif(objectif.posisitonX, objectif.posisitonY);
                     AllCars.push(vehicule);
                 }, randomizeMe(2000, 5000));
 
                 setInterval(function () {
-                    for (car in AllCars) {
-                        AllCars[car].Avancer();
+                    //console.log(AllCars);
+                    for (var i = 0; i < AllCars.length; i++) {
+                        AllCars[i].Actions(Centre.positionX, Centre.positionY);
                     }
                     //vehicule1.Avancer();
                     //vehicule2.Avancer();

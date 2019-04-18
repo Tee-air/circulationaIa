@@ -1,8 +1,8 @@
 class Segment{
-    constructor(noeudDebut, noeudFin, num){
+    constructor(noeudDebut, noeudFin){
         this.noeudDebut = noeudDebut;
         this.noeudFin = noeudFin;
-        this.num = num;
+        //this.num = num;
     }
     
     getNoeudFin(){
