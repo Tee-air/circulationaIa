@@ -1,5 +1,5 @@
 class Vehicule {
-    constructor(x, y, largeur, id) {
+    constructor(x, y, largeur, id, couleur) {
         this.canvas = $("#globalCanvas").get(0);
         this.context = this.canvas.getContext("2d");
         this.positionX = x;
@@ -8,25 +8,11 @@ class Vehicule {
         this.vitesse = 1;
         this.distanceSecu = 30;
         this.id = id;
+        
+        this.couleur = couleur;
     }
 
     Actions(noeudPositionX, noeudPositionY) {
-        //Si le véhicule se rapproche du noeud central
-        //Donc sur l'axe Y: Si sont Y est égal à celui du noeud
-
-        //Cas 1:
-        //La voiture arrive à l'intersection par le haut(Nord), son objectif est d'aller à l'Est
-
-        //Cas 2:
-        //La voiture arrive à l'intersection par la gauche(Ouest), son objectif est d'aller à l'Est
-
-        //Cas 3: 
-        //La voiture arrive à l'intersection par le haut (Nord), son objectif est d'aller au Sud
-
-        //Cas 4:
-        //La voiture arrive à l'intersection par la gauche (Ouest), son objectif est d'aller au Sud
-
-
         if (noeudPositionX === this.positionX && this.positionY < noeudPositionY) {
             //Vien du NORD
             this.Avancer(false);
@@ -41,36 +27,23 @@ class Vehicule {
                 this.Avancer(false);
             }
         }
-
-
-
-        //} else {
-        //console.log(5, "id: "+ this.id);
-        //this.Avancer(false);
-        //}
-
     }
 
     Avancer(horiz) {
-        //this.context.clearRect(this.positionX, this.positionY, this.largeur, 15);
-        //this.context.clearRect(0,0,this.canvas.width, this.canvas.height);
-        //this.context.beginPath();
-        //TODO: 
+        this.Pop();
         if (horiz === true) {
             this.context.clearRect(this.positionX, this.positionY, this.largeur, 15);
             this.context.clearRect(this.positionX, this.positionY, 15, this.largeur);
             this.positionX += this.vitesse;
             this.context.fillRect(this.positionX, this.positionY, 15, this.largeur);
+            //this.context.stroke();
         } else {
             this.context.clearRect(this.positionX, this.positionY, this.largeur, 15);
             this.context.clearRect(this.positionX, this.positionY, 15, this.largeur);
             this.positionY += this.vitesse;
             this.context.fillRect(this.positionX, this.positionY, this.largeur, 15);
+            //this.context.stroke();
         }
-
-        //this.context.closePath();
-        //x+=4;
-
         //window.requestAnimationFrame(Avancer());
     }
 
@@ -80,13 +53,13 @@ class Vehicule {
         console.log()
     }
 
-    turn() {
+    setCouleur() {
 
     }
 
     Pop() {
         this.context.fillRect(this.positionX, this.positionY, this.largeur, 15);
-        this.context.fillStyle = '#A3A';
+        this.context.fillStyle = this.couleur;
     }
 
     getPS(pourcent, totalSize) {

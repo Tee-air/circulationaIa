@@ -38,7 +38,7 @@
 
         <script type="text/javascript">
             var allPoints = ["A", "B", "C", "D", "E"];
-
+            var allCouleur = ['CornflowerBlue', '#9932CC', 'rgb(255, 0, 0)', 'rgba(153, 50, 204, 0.5)'];
 
             var AllCars = [];
             var canvas = document.getElementById("globalCanvas"),
@@ -114,7 +114,9 @@
 
                 setInterval(function () {
                     var depart = whereToPop[getRandObjectif(whereToPop)];
-                    var vehicule = new Vehicule(depart.positionX, depart.positionY, w, AllCars.length);
+                    var couleurRand = allCouleur[getRandObjectif(allCouleur)];
+                    console.log(couleurRand);
+                    var vehicule = new Vehicule(depart.positionX, depart.positionY, w, AllCars.length, couleurRand);
                     var objectif = whereToOut[getRandObjectif(whereToOut)];
                     vehicule.setObjectif(objectif.positionX, objectif.positionY);
                     AllCars.push(vehicule);

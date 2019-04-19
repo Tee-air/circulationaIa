@@ -9,4 +9,6 @@ class Feu{
         this.interval = interval;
     }        
     
+    
+    
 }
