@@ -25,11 +25,9 @@
             #feuCanvas{
 
             }
+
         </style>        
         <canvas id="globalCanvas">
-
-        </canvas>
-        <canvas id="secondCanvas">
 
         </canvas>
         <button>
@@ -41,9 +39,18 @@
             var allCouleur = ['CornflowerBlue', '#9932CC', 'rgb(255, 0, 0)', 'rgba(153, 50, 204, 0.5)'];
 
             var AllCars = [];
-            var canvas = document.getElementById("globalCanvas"),
-                    ctx = canvas.getContext("2d");
-
+            var canvas = document.getElementById("globalCanvas");
+            var ctx = canvas.getContext("2d");
+            
+            var canvas2 = document.createElement("canvas"),
+                    ctx2 = canvas2.getContext("2d");
+                    ctx2.fillStyle = 'blue';
+                    ctx2.fillRect(50,50,150,150);
+            
+            var canvas3 = document.createElement("canvas"),
+                    ctx3 = canvas3.getContext("2d");
+                    ctx3.fillStyle = 'red';
+                    ctx3.fillRect(50,50,100,150);            
 
             //Set canvas Size
             canvas.width = getPS(0.8, screen.width);
@@ -78,10 +85,23 @@
 
             var background = new Image();
             background.src = "xd2.jpg";
+            
+            var Feu1 = new Feu(1, "green", getPS(0.46, canvas.width), getPS(0.55, canvas.height), getPS(0.01, canvas.width));
+            var Feu2 = new Feu(2, "green", getPS(0.52, canvas.width), getPS(0.45, canvas.height), getPS(0.01, canvas.width));
 
             background.onload = function () {
                 ctx.drawImage(background, 0, 0);
-            }
+                ctx.drawImage(canvas2, 0, 0);
+                ctx.drawImage(canvas3, 0, 0);
+                
+                //Feu1.PopFeu(1, canvas, ctx, "green");
+                //Feu2.PopFeu(2, canvas, ctx, "red");
+                
+                //Feu1.PopFeu(canvas, ctx, "green");
+                //Feu2.PopFeu(canvas, ctx, "red");
+                //ctx.drawImage(canvas2, 0, 0, 200, 200);
+                //Feu1.setStateFeu("")
+            };
 
 
 
@@ -97,18 +117,6 @@
             //console.log('50% de la largeur:' + roadX);
             console.log("x:" + roadX + " y:" + roadY);
             // Width :1228 height :691
-
-            //x du feu = 50% + 1% + lageur du cercle.
-            //y du feu = 50% + 1% + largeur du cercle.
-            ctx.fillStyle = "red";
-            ctx.arc(getPS(0.5, tmpW), getPS(0.54, tmpH), getPS(0.01, tmpW), 0, 2 * Math.PI);
-            ctx.fill();
-
-            ctx.fillStyle = "red";
-            ctx.arc(getPS(0.5, tmpW), getPS(0.54, tmpH), getPS(0.01, tmpW), 0, 2 * Math.PI);
-            ctx.fill();
-
-
             function goForIt() {
                 var objectif = false;
 
